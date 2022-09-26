@@ -40,25 +40,34 @@ im_byte = img_as_ubyte(im_float)
 #5
 
 def histogram_stretch(img_in):
-    #img_float = img_as_float(img_in)
+    img_float = img_as_float(img_in)
 
-    min_val = np.min(img_in)
-    max_val = np.max(img_in)
-    min_desired = 0
-    max_desired = 255
+    min_val = img_float.min()
+    max_val = img_float.max()
+    min_desired = 0.0
+    max_desired = 1.0
 
+    print("MaxVal Before")
     print(max_val)
+    print("MinVal before")
+    print(min_val)
 
-    img_out = (max_desired - min_desired) // (max_val - min_val) * (img_in - min_val) + min_desired
+    print((max_desired - min_desired) / (max_val - min_val))
 
+    #img_out = (max_desired - min_desired) / (max_val - min_val) * (img_float - min_val) + min_desired
+
+    img_out = np.multiply((img_float - min_val), (max_desired - min_desired) / (max_val - min_val))
+
+    print("MaxVal After")
     print(np.max(img_out))
-    #print(np.min(img_out))
+    print("MinVal After")
+    print(np.min(img_out))
 
 
-    return (img_out)
+    return img_as_ubyte(img_out)
 
 stretch_im = histogram_stretch(im)
-hist2 = cv2.calcHist([stretch_im], [0], None, [255], [0,255])
+hist2 = cv2.calcHist([stretch_im], [0], None, [256], [0,256])
 
 plt.figure()
 plt.plot(hist2)
