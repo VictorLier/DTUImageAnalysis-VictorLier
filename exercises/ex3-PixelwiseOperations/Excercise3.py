@@ -73,3 +73,42 @@ plt.figure()
 plt.plot(hist2)
 plt.xlim([0,255])
 plt.show()
+
+
+#6
+
+cv2.imshow('image window', im_float)
+# add wait key. window waits until user presses a key
+cv2.waitKey(0)
+# and finally destroy/close all open windows
+cv2.imshow('image window', stretch_im)
+cv2.waitKey(0)
+
+cv2.destroyAllWindows()
+
+
+
+#7
+
+def gamma_map(img, gamma):
+    img_float = img_as_float(img)
+    img_float = img_float**gamma
+
+    return img_float
+
+
+#8
+
+img = gamma_map(im, 2)
+
+cv2.imshow('image window', img)
+# add wait key. window waits until user presses a key
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+
+#9
+
+def threshold_image(img_in, thres):
+    
+
