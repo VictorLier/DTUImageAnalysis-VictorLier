@@ -1,4 +1,4 @@
-# Exercise 6b - Advanced segmentation Fisherman's Linear discriminant analysis for segmentation
+# Exercise 6b - Advanced segmentation. Fisherman's Linear discriminant analysis for segmentation
 
 
 ## Introduction
@@ -15,7 +15,7 @@ Exercise - You simply go step-by-step and fill in the command lines and answer/d
 
 As a classifier, we will use a class of linear discriminate functions that aims to place a hyperplane in the multi-dimensional feature space that acts as a decision boundary to segment two features into classes. Since we only look at image intensities of two image modalities our multi-dimensional feature space is a 2D intensity histogram. The linear discriminant classifier is based on the Bayesian theory where the posterior probability is the probability of voxel x belonging to class $C_i$. The voxel x belongs to the class with the highest posterior probability. 
 
-You can find an **important** description of the theory behind LDA in - [Exercise theory](theory/Exercise6b_2022.pdf)
+You can find an **important** description of the theory behind LDA in - [Exercise theory](theory/Exercise6b_2022_updateDec22.pdf)
 
 ## Learning Objectives
 
@@ -24,10 +24,10 @@ You can find an **important** description of the theory behind LDA in - [Exercis
 3.	To identify the expected intensity thresholds in each of the 1D histograms that best segment the same feature in the two image modalities.
 4.	To visually the 2D histogram of two image modalities that map the same object but with different intensity information.
 5.	To interpret the 2D histogram information by identifying clusters of 2D intensity distributions and relate these to features in the images.
-6.	To draw an expected linear hyper plan in the 2D histogram that best segment and feature in the two image modalities
+6.	To draw an expected linear hyper plane in the 2D histogram that best segment and feature in the two image modalities
 7.	To extract training data sets and their corresponding class labels from expert drawn regions-of-interest data, and map their corresponding 2D histogram for visual inspection
 8.	To relate the Bayesian theory to a linear discriminate analysis classifier for estimating class probabilities of segmented features.
-9.	To judge if the estimated linear or a non-linear hyper plan is optimal placed for robust segmentation of two classes.
+9.	To judge if the estimated linear or a non-linear hyper plane is optimal placed for robust segmentation of two classes.
 
 ## Installing Python packages
 
@@ -100,7 +100,7 @@ Place trainings examples i.e. ROI_WM and ROI_GM into variables C1 and C2 represe
 ## Exercise 3
 For each binary training ROI find the corresponding training examples in ImgT1 and ImgT2. Later these will be extracted for LDA training.
 
-*Tips*: If you are a MATLAB-like programming lover, you may use the `np.argwhere()` function appropiately to return the index to voxels in the image full filling e.g. intensity values >0 hence belong to a given class. Name the index variables qC1 and qC2, respectively.
+*Tips*: If you are a MATLAB-like programming lover, you may use the `np.argwhere()` function appropriately to return the index to voxels in the image full filling e.g. intensity values >0 hence belong to a given class. Name the index variables qC1 and qC2, respectively.
 
 **Q4**: What is the difference between the 1D histogram of the training examples and the 1D histogram of the whole image? Is the difference expected?
 
@@ -152,7 +152,7 @@ Show scatter plot of segmentation results as in 5.
 
 **Q6** Can you identify where the hyperplane is placed i.e. y(x)=0?
 
-**Q7** Is the linear hyper plane positioned as you expected or would a non-linear hyper plan perform better?
+**Q7** Is the linear hyper plane positioned as you expected or would a non-linear hyper plane perform better?
 
 **Q8** Would segmentation be as good as using a single image modality using thresholding?
 
@@ -162,6 +162,6 @@ Show scatter plot of segmentation results as in 5.
 
 **Q10** Are the training examples representative for the segmentation results? Are you surprised that so few training examples perform so well? Do you need to be an anatomical expert to draw these?
 
-**Q11** Compare the segmentation results with the original image. Is the segmentation results satisfactory? Why not?
+**Q11** Compare the segmentation results with the original image. Are the segmentation results satisfactory? Why not?
 
 **Q12** Is one class completely wrong segmented? What is the problem?
