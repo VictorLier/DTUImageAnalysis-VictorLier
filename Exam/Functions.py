@@ -1,5 +1,15 @@
 import cv2
 import matplotlib.pyplot as plt
+import numpy as np
+
+def Covariance(a, b):
+    if len(a) == len(b):
+        CoVa = 1/(len(a)-1) * np.sum(np.multiply(a,b))
+
+    else:
+        print("Kan ikke regne Covariance. Vektor er ikke samme størrelse")
+
+    return CoVa
 
 def FileImport(FilSti):
     im = cv2.imread(FilSti, cv2.IMREAD_ANYDEPTH)
