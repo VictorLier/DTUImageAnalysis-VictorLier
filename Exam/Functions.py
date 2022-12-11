@@ -181,6 +181,7 @@ def gamma_map(img, gamma):
     return img_float
 
 def threshold_image(img_in, thres):
+    imgcopy = img_in.copy()
     if img_in.dtype == 'uint8':
         max = 255
         min = 0
@@ -199,12 +200,11 @@ def threshold_image(img_in, thres):
 
     else:  
         print("Billede type eksistere ikke")
+    
+    imgcopy[imgcopy > thres] = max
+    imgcopy[imgcopy < thres] = min
 
-    img_in[img_in > thres] = max
-    img_in[img_in < thres] = min
-    img = img_in
-
-    return img_as_ubyte(img)
+    return img_as_ubyte(imgcopy)
 
 #Read the documentation of [Otsu's method](https://scikit-image.org/docs/dev/api/skimage.filters.html#skimage.filters.threshold_otsu) and use it to compute and apply a threshold to the vertebra image.
 from skimage.filters import threshold_otsu
@@ -277,4 +277,40 @@ def Prewitt(Image):
 		Image = Image
 
 	return (prewitt(Image))	
+
+def plot_comparison(original, filtered, filter_name):
+    fig, (ax1, ax2) = plt.subplots(ncols=2, figsize=(8, 4), sharex=True, sharey=True)
+    ax1.imshow(original, cmap=plt.cm.gray)
+    ax1.set_title('original')
+    ax1.axis('off')
+    ax2.imshow(filtered, cmap=plt.cm.gray)
+    ax2.set_title(filter_name)
+    ax2.axis('off')
+    io.show()
+
+
+from skimage.morphology import erosion, dilation, opening, closing
+#De skal være GreyScale:
+def Erosion(img,DiskSize):
+    footprint = disk(DiskSize)
+    eroded = erosion(img, footprint)
+    return eroded
+
+def Dilation(img, DiskSize):
+    footprint = disk(DiskSize)
+    dilated = dilation(img, footprint)
+    return dilated
+
+def Opening(img, DiskSize):
+    footprint = disk(DiskSize)
+    opened = opening(img, footprint)
+    return opened
+
+def Closing(img, DiskSize):
+    footprint = disk(DiskSize)
+    closed = closing(img, footprint)
+    return closed
+
+
+
 
