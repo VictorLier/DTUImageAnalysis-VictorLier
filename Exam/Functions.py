@@ -2,6 +2,10 @@ import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 import math
+from skimage import io, color, morphology
+from skimage import segmentation
+from skimage import measure
+from skimage.color import label2rgb
 
 def Covariance(a, b):
     # Finder covariance mellem a og b
@@ -68,6 +72,14 @@ def Histogram(Image):
     plt.plot(Hist)
     plt.xlim(range)
     plt.show() 
+
+'''
+Kan også gøres sådan:
+plt.hist(img_gray.ravel(), bins=256, range=(1, 100))
+io.show()
+'''
+
+
 
 def GaussLensMM(FocalLength, ObjectDistance, CCDdistance):
     #Udregner GaussLens ligningen - alle mål i mm
@@ -180,31 +192,27 @@ def gamma_map(img, gamma):
 
     return img_float
 
-def threshold_image(img_in, thres):
-    imgcopy = img_in.copy()
+def threshold_image(img_in, thres, INV):
+    img_in = cv2.cvtColor(img_in, cv2.COLOR_BGR2GRAY)
     if img_in.dtype == 'uint8':
         max = 255
-        min = 0
 
     elif img_in.dtype == 'uint16':
         max = 65535
-        min = 0
     
     elif img_in.dtype == 'uint32':
         max = 2**32 - 1
-        min = 0
 
     elif img_in.dtype == 'float':
         max = 1
-        min = 0
 
     else:  
         print("Billede type eksistere ikke")
-    
-    imgcopy[imgcopy > thres] = max
-    imgcopy[imgcopy < thres] = min
-
-    return img_as_ubyte(imgcopy)
+    if INV:
+        ret,img = cv2.threshold(img_in,thres,max,cv2.THRESH_BINARY_INV)
+    else:
+        ret,img = cv2.threshold(img_in,thres,max,cv2.THRESH_BINARY)
+    return img_as_ubyte(img)
 
 #Read the documentation of [Otsu's method](https://scikit-image.org/docs/dev/api/skimage.filters.html#skimage.filters.threshold_otsu) and use it to compute and apply a threshold to the vertebra image.
 from skimage.filters import threshold_otsu
@@ -290,6 +298,7 @@ def plot_comparison(original, filtered, filter_name):
 
 
 from skimage.morphology import erosion, dilation, opening, closing
+from skimage.morphology import disk
 #De skal være GreyScale:
 def Erosion(img,DiskSize):
     footprint = disk(DiskSize)
@@ -312,5 +321,24 @@ def Closing(img, DiskSize):
     return closed
 
 
+from skimage import measure
+from skimage.color import label2rgb
 
+def Label(Image):
+    label_img = measure.label(Image)
+    n_labels = label_img.max()
+    print(f"Number of labels: {n_labels}")    
+    Overlay = label2rgb(label_img, Image)
+
+    return label_img, Overlay
+
+
+from skimage import segmentation
+segmentation.clear_border(img_bin)
+
+def Areas(label_img):
+    region_props = measure.regionprops(label_img)
+    areas = np.array([prop.area for prop in region_props])
+
+    return areas
 
