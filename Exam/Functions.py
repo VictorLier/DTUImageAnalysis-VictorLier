@@ -79,6 +79,13 @@ plt.hist(img_gray.ravel(), bins=256, range=(1, 100))
 io.show()
 '''
 
+'''
+Plot:
+io.imshow(img,vmin=0, vmax=150, cmap ='gray')
+io.show()
+'''
+
+
 
 
 def GaussLensMM(FocalLength, ObjectDistance, CCDdistance):
