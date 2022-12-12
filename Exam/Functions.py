@@ -341,7 +341,7 @@ def Label(Image):
 
 
 from skimage import segmentation
-segmentation.clear_border(img_bin)
+#segmentation.clear_border(img_bin)
 
 def Areas(label_img):
     region_props = measure.regionprops(label_img)
