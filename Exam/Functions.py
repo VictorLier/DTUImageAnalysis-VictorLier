@@ -20,7 +20,7 @@ def Covariance(a, b):
 def FileImport(FilSti):
     #Importere billede - husk at starte r'filsti'
 
-    im = cv2.imread(FilSti)
+    im = cv2.imread(FilSti, cv2.IMREAD_ANYCOLOR)
 
     return im
 
@@ -162,15 +162,15 @@ from skimage.util import img_as_float
 
 from skimage.util import img_as_ubyte
 
-def histogram_stretch(img):
+def histogram_stretch(img, min_desired, max_desired):
     #Convert til float
     if img.dtype == 'float':
         img_in = img
     else:
         img_in = img_as_float(img)
 
-    min_desired = 0
-    max_desired = 1
+    min_desired = min_desired
+    max_desired = max_desired
 
     #Min of max værdi findes
     min_val, max_val = MinMax(img_in)
@@ -200,7 +200,11 @@ def gamma_map(img, gamma):
     return img_float
 
 def threshold_image(img_in, thres, INV):
-    img_in = cv2.cvtColor(img_in, cv2.COLOR_BGR2GRAY)
+    if len(img_in.shape) == 3:
+	    img_in = cv2.cvtColor(img_in, cv2.COLOR_BGR2GRAY)
+    else:
+        img_in = img_in
+
     if img_in.dtype == 'uint8':
         max = 255
 
@@ -348,4 +352,12 @@ def Areas(label_img):
     areas = np.array([prop.area for prop in region_props])
 
     return areas
+
+def Perimeter(label_img):
+    region_props = measure.regionprops(label_img)
+    perimeter = np.array([prop.perimeter for prop in region_props])
+
+    return perimeter
+
+
 
